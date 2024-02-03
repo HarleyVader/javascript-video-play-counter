@@ -91,12 +91,7 @@ var server = https.createServer(app);
 server.listen(PORT, () => {
   console.log("server starting on port : " + PORT)
 });
-/*
-app.listen(PORT, () => {
-    console.log(`Server is running on https://brandynette.xxx:${PORT}/videos`);
-});
 
-*/
 const debug = function () {
     console.log(dirlist);
     //() => { } //anonimous function 
