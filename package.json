@@ -1,7 +1,7 @@
 {
-  "name": "videocounter",
+  "name": "video-play-counter",
   "version": "0.0.2",
-  "description": "melkaneas video counter",
+  "description": "melkaneas video play counter",
   "main": "counter.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,9 +11,9 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
+    "https": "^1.0.0",
     "level": "^8.0.1"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HarleyVader/javascript-video-play-counter.git"
@@ -26,7 +26,7 @@
     "call",
     "over",
     "nginx",
-    "apache",
+    "apache2",
     "behind",
     "the",
     "CMS"

@@ -15,12 +15,12 @@ var options = {
   cert: cert
 };
 */
-//using an anonimos function will asign the constant globaly
+//using an anonimous function will asign the constant globaly
 const filter = (value) => {
-    if (value === "ico" || value === "css") {
-        return false; //first return will exclude the
+    if (value === "ico" || value === "css" || value === "counter") {
+        return false; 
     }
-    if (fs.statSync(path.resolve("./") + '/' + value).isDirectory()) {
+    if (fs.statSync(path.resolve("../") + '/' + value).isDirectory()) {
         return true
     }
     return false
@@ -29,7 +29,7 @@ const filter = (value) => {
 //will asign the the scope of fs inside the function
 function filter(value) {
     if (value === "ico" || value === "css") {
-        return false; //first return will exclude the
+        return false; 
     }
     if (fs.statSync(path.resolve("./") + '/' + value).isDirectory()) {
         return true
@@ -40,7 +40,7 @@ filter();
 */
 
 //fs get dir list by filtering then joining & resolving the path for the fs to read the dir sync
-let dirlist = fs.readdirSync(path.resolve("./")).filter(filter);
+let dirlist = fs.readdirSync(path.resolve("../")).filter(filter);
 // Create a database
 const db = new Level('vidViews', { valueEncoding: 'json' })
 const addVid = async (value) => {
@@ -50,7 +50,6 @@ const addVid = async (value) => {
 }
 async function addVidTodb() {
     dirlist.forEach(addVid)
-    // Add an entry with key videoID and value 1
 }
 addVidTodb();
 let videoPlayCount;
@@ -70,7 +69,7 @@ app.get('/api/sync', (req, res) => {
     return res.send("OK")
 })
 // Route to handle incrementing the video play counter
-app.get('/api/Counter/:videoId', async (req, res) => {
+app.get('/api/counter/:videoId', async (req, res) => {
     const { videoId } = req.params;
     console.log(videoId)
     let videoviews = await db.get(videoId);
@@ -97,7 +96,7 @@ const debug = function () {
     //() => { } //anonimous function 
     console.log(filter);
     //process.exit(); //forcefull prosses exit
-    // console.log(filter1);
+    console.log(videoPlayCount);
     //console.log(() => { })
 }
 debug();
