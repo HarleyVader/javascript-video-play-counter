@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const { Level } = require('level');
 const fs = require('fs');
-const https = require('https');
+//const https = require('https');
 
 const app = express();
 const PORT = 3000;
@@ -27,20 +27,6 @@ const filter = (value) => {
     }
     return false
 }
-/*
-//will asign the the scope of fs inside the function
-function filter(value) {
-    if (value === "ico" || value === "css") {
-        return false; 
-    }
-    if (fs.statSync(path.resolve("./") + '/' + value).isDirectory()) {
-        return true
-    }
-    return false
-}
-filter();
-*/
-
 //fs get dir list by filtering then joining & resolving the path for the fs to read the dir sync
 let dirlist = fs.readdirSync(path.resolve("../")).filter(filter);
 // Create a database
@@ -70,17 +56,10 @@ async function addVidTodb() {
 }
 app.get('/api/sync', async (req, res) => {
     await addVidTodb();
-    return res.send("OK")
+    return res.send("Sync Complete!")
 })
-let videoPlayCount;
-//total video views from all videos
-async function calculateTotalViews() {
-    let totalViews = 0;
-    for await (const [key, value] of db.iterator({})) {
-        totalViews += value;
-    }
-    return totalViews;
-}
+let videoviews;
+
 // Middleware to parse JSON in the request body
 app.use(bodyParser.json());
 // Serve static files from the 'public' directory
@@ -92,6 +71,14 @@ app.get("/api/list", async (req, res) => {
     }
     return res.send(list);
 })
+//total video views from all videos
+async function calculateTotalViews() {
+    let totalViews = 0;
+    for await (const [key, value] of db.iterator({})) {
+        totalViews += value;
+    }
+    return totalViews;
+}
 // Route to handle incrementing the video play counter
 app.get('/api/counter/:videoId', async (req, res) => {
     const { videoId } = req.params;
@@ -108,37 +95,24 @@ app.get('/api/counter/:videoId', async (req, res) => {
         res.status(400).json({ success: false, error: 'Missing videoId in the request body' });
     }
 });
-/*
-app.get('/api/counter/:videoId', async (req, res) => {
-    const { videoId } = req.params;
-    console.log(videoId)
-    let videoviews = await db.get(videoId);
-    
-
-    if (videoviews !== undefined) {   
-        videoviews += 1;    
-        await db.put(videoId, videoviews); 
-        console.log(`Video ${videoId} play count incremented. Total plays: ${videoPlayCount}`);
-        // Send the updated view count back to the client
-        res.json({ success: true, viewCount: videoviews });
-    } else {
-        res.status(400).json({ success: false, error: 'Missing videoId in the request body' });
-    }
+//var server = https.createServer(app);
+app.get("/", (request, response) => {
+    response.send("melkanea was here");
 });
-*/
-var server = https.createServer(app);
-
+app.listen(PORT, () => {
+    console.log("Listen on the port: " + PORT);
+});
+/*
 server.listen(PORT, () => {
   console.log("server starting on port : " + PORT)
 });
-
+*/
 const debug = function () {
     console.log(dirlist);
-    //() => { } //anonimous function 
     console.log(filter);
     console.log(videoviews);
     //process.exit(); //forcefull prosses exit
-    console.log(videoPlayCount);
     //console.log(() => { })
+    //() => { } //anonimous function 
 }
 debug();
