@@ -16,10 +16,12 @@ var options = {
 };
 */
 //using an anonimous function will asign the constant globaly
+const excludedir = ["ico", "css", "counter", "backup"];
 const filter = (value) => {
-    if (value === "ico" || value === "css" || value === "counter") {
+    if (excludedir.includes(value)) {
         return false; 
     }
+    //change dir to get the video dir list (change for VPS)
     if (fs.statSync(path.resolve("../") + '/' + value).isDirectory()) {
         return true
     }
@@ -48,11 +50,37 @@ const addVid = async (value) => {
         await db.put(value, 0)
     }
 }
+//drb 
+/*
 async function addVidTodb() {
     dirlist.forEach(addVid)
 }
-addVidTodb();
+*/
+//copilot with try catch error handling
+async function addVidTodb() {
+    try {
+        for (let value of dirlist) {
+            if (!await db.get(value, () => false)) {
+                await db.put(value, 0)
+            }
+        }
+    } catch (error) {
+        console.error('Error in addVidTodb:', error);
+    }
+}
+app.get('/api/sync', async (req, res) => {
+    await addVidTodb();
+    return res.send("OK")
+})
 let videoPlayCount;
+//total video views from all videos
+async function calculateTotalViews() {
+    let totalViews = 0;
+    for await (const [key, value] of db.iterator({})) {
+        totalViews += value;
+    }
+    return totalViews;
+}
 // Middleware to parse JSON in the request body
 app.use(bodyParser.json());
 // Serve static files from the 'public' directory
@@ -64,16 +92,28 @@ app.get("/api/list", async (req, res) => {
     }
     return res.send(list);
 })
-app.get('/api/sync', (req, res) => {
-    addVidTodb();
-    return res.send("OK")
-})
 // Route to handle incrementing the video play counter
+app.get('/api/counter/:videoId', async (req, res) => {
+    const { videoId } = req.params;
+    let videoviews = await db.get(videoId);
+
+    if (videoviews !== undefined) {   
+        videoviews += 1;    
+        await db.put(videoId, videoviews); 
+        videoPlayCount = await calculateTotalViews();
+        console.log(`Video ${videoId} play count incremented. Total plays: ${videoPlayCount}`);
+        // Send the updated view count back to the client
+        res.json({ success: true, viewCount: videoviews });
+    } else {
+        res.status(400).json({ success: false, error: 'Missing videoId in the request body' });
+    }
+});
+/*
 app.get('/api/counter/:videoId', async (req, res) => {
     const { videoId } = req.params;
     console.log(videoId)
     let videoviews = await db.get(videoId);
-    console.log(videoviews)
+    
 
     if (videoviews !== undefined) {   
         videoviews += 1;    
@@ -85,6 +125,7 @@ app.get('/api/counter/:videoId', async (req, res) => {
         res.status(400).json({ success: false, error: 'Missing videoId in the request body' });
     }
 });
+*/
 var server = https.createServer(app);
 
 server.listen(PORT, () => {
@@ -95,6 +136,7 @@ const debug = function () {
     console.log(dirlist);
     //() => { } //anonimous function 
     console.log(filter);
+    console.log(videoviews);
     //process.exit(); //forcefull prosses exit
     console.log(videoPlayCount);
     //console.log(() => { })
