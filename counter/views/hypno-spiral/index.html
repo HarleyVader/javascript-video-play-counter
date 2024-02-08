@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hypno Spiral - brandynette.xxx</title>
+
+    <!--favicon-->
+    <link rel="icon" type="image/x-icon" href="../ico/hypno-spiral.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@800&display=swap" rel="stylesheet"/>
+  </head>
+  <style>
+    :root {
+      --radius: 2rem;
+      --padding-1: 6.25rem;
+      --margin-1: 0.1rem;
+      /*pornhub*/
+      --ph: #ffa31a;
+    --ph-dark: rgba(128, 128, 128, 1);
+    --ph-gray: rgba(41, 41, 41, 1);
+    --ph-black: rgba(27, 27, 27, 1);
+    }
+    html {
+      background-size: 1780px 860px;
+      background-repeat: no-repeat;
+      background-image: url("https://media.giphy.com/media/l378vg4Pm9LGnmD6M/giphy-downsized-large.gif");
+      background-color: rgb(40, 3, 31);
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      background-color: rgba(255, 255, 255, 0);
+    }
+    .grid-item {
+      padding: var(--padding-1);
+      font-size: 24px;
+      text-align: center;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 5px var(--colorchanger-2);
+      font-family: "Dosis", sans-serif;
+      font-size: 24px;
+    }
+    .grid-item p {
+      color: var(--colorchanger);
+    }
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgb(125, 9, 96);
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      text-transform: uppercase;
+      font-family: "Dosis", sans-serif;
+      font-size: 18px;
+    }
+    /* brandynette.com buttons */
+    .btn-brandynette {
+      color: rgb(255, 255, 255);
+      background-color: var(--ph);
+      padding: 3px 7px 3px 7px;
+      text-transform: uppercase;
+      font-family: "Dosis", sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      font-weight: bold;
+      letter-spacing: 0.2rem;
+      border-radius: var(--radius);
+      border-style: groove;
+      border-width: 0.3rem;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .btn-brandynette:hover,
+    .btn-brandynette:focus {
+      color: var(--ph);
+      background-color: var(--ph-black);
+      border-radius: var(--radius);
+    }
+    .btn-brandynette-cancel {
+      font-family: "Dosis", sans-serif;
+      font-size: 24px;
+      color: rgb(255, 255, 255);
+      background-color: var(--ph);
+      padding: 3px 7px 3px 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+      border-radius: var(--radius);
+      border-style: groove;
+      border-width: 0.3rem;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .btn-brandynette-cancel:hover,
+    .btn-brandynette-cancel:focus {
+      color: var(--ph);
+    }
+  </style>
+  <body>
+    <section>
+      <div class="grid-container">
+        <div class="grid-item"><p id="1"></p></div>
+        <div class="grid-item"><p id="2"></p></div>
+        <div class="grid-item"><p id="3"></p></div>
+        <div class="grid-item"><p id="4"></p></div>
+        <div class="grid-item"><p id="5"></p></div>
+        <div class="grid-item"><p id="6"></p></div>
+        <div class="grid-item"><p id="7"></p></div>
+        <div class="grid-item"><p id="8"></p></div>
+        <div class="grid-item"><p id="9"></p></div>
+      </div>
+    </section>
+    <!--Cookie Banner-->
+    <div class="cookie-banner" id="cookieBanner">
+      <p>
+        This website uses cookies to ensure you get the best experience on our
+        website.
+      </p>
+      <button class="btn-brandynette" onclick="acceptCookies()">Accept</button>
+      <button class="btn-brandynette-cancel" onclick="declineCookies()">Decline
+      </button>
+    </div>
+    <script>
+      setInterval(function () {
+        triggers.iterateArrays();
+        colorChanger();
+      }, 400);
+
+      const triggers = {
+        insults: ["bitch", "whore", "slut", "slave", "piggy"],
+        trans: ["sissy", "shemale", "faggot", "tranny", "submisive"],
+        bimbos: ["britney", "barbie", "brandy", "bambi", "belle", "bailey"],
+        indexes: {
+          insults: 0,
+          trans: 0,
+          bimbos: 0,
+        },
+        iterateArrays: function () {
+          // Get all elements with the class 'grid-item'
+          let gridItems = document.querySelectorAll(".grid-item p");
+
+          // Iterate through each grid item
+          gridItems.forEach((item, i) => {
+            let insultIndex = this.indexes.insults % this.insults.length;
+            let transIndex = this.indexes.trans % this.trans.length;
+            let bimboIndex = this.indexes.bimbos % this.bimbos.length;
+
+            item.textContent = `${this.insults[insultIndex]} ${this.trans[transIndex]} ${this.bimbos[bimboIndex]}`;
+
+            // Increment the indexes
+            this.indexes.insults++;
+            this.indexes.trans++;
+            this.indexes.bimbos++;
+          });
+        },
+      };
+    </script>
+    <script>
+      /*
+       * colorchanger by melkanea
+       * RGBA(red,green,blue,transparency)
+       */
+      //define the colors - not hex but using an array with alpha values
+      let red; //red
+      let green; //green
+      let blue; //blue
+      let trans; //transparent or alpha value
+      //red
+      function colorRed() {
+        let r = Math.random() * 256;
+        red = Math.round(r);
+        return red;
+      }
+      //green
+      function colorGreen() {
+        let g = Math.random() * 256;
+        green = Math.round(g);
+        return green;
+      }
+      //blue
+      function colorBlue() {
+        let b = Math.random() * 256;
+        blue = Math.round(b);
+        return blue;
+      }
+      //alpha value
+      function colorTrans() {
+        let t = Math.random() * 101;
+        trans = Math.round(t);
+        return trans;
+      }
+      /*
+       *change css root variable
+       */
+      // Get the root element
+      var r = document.querySelector(":root");
+      // Create a function for setting a variable value
+      function colorChanger() {
+        colorRed();
+        colorGreen();
+        colorBlue();
+        colorTrans();
+        //set --colorChanger to rgba constructor
+        r.style.setProperty(
+          "--colorchanger",
+          "rgba(" + green + "," + blue + "," + red + "," + trans + ")"
+        );
+        r.style.setProperty(
+          "--colorchanger-1",
+          "rgba(" + red + "," + blue + "," + green + "," + trans + ")"
+        );
+        r.style.setProperty(
+          "--colorchanger-2",
+          "rgba(" + blue + "," + red + "," + green + "," + trans + ")"
+        );
+        r.style.setProperty(
+          "--colorchanger-3",
+          "rgba(" + red + "," + green + "," + blue + "," + trans + ")"
+        );
+        r.style.setProperty(
+          "--colorchanger-4",
+          "rgba(" + green + "," + red + "," + blue + "," + trans + ")"
+        );
+        r.style.setProperty(
+          "--colorchanger-5",
+          "rgba(" + blue + "," + green + "," + red + "," + trans + ")"
+        );
+      }
+    </script>
+    <script>
+      const imageArray = [
+        "https://media.tenor.com/dSU88H6wmbIAAAAC/spiral.gif",
+        "https://media.tenor.com/esNDCEJm768AAAAd/vixen-spiral.gif",
+        "https://media.giphy.com/media/CDOKK7Ctw9pB75jmGm/giphy.gif",
+        "https://media.tenor.com/dSU88H6wmbIAAAAC/spiral.gif",
+        "https://media.tenor.com/DiiE30jLhzQAAAAC/spiral-psychedelic.gif",
+        "https://media.tenor.com/HkFw5s_mtWYAAAAC/vixenspiral-vixen.gif",        
+        
+      ];
+
+      let currentImageIndex = 1;
+
+      function changeBackgroundImage() {
+        const imageUrl = imageArray[currentImageIndex];
+        document.body.style.backgroundImage = `url(${imageUrl})`;
+        document.body.style.backgroundSize = "1780px 860px";
+        document.body.style.backgroundRepeat = "no-repeat";
+
+        currentImageIndex = (currentImageIndex + 1) % imageArray.length;
+      }
+      setInterval(changeBackgroundImage, 60000);
+    </script>
+    <script>
+      function acceptCookies() {
+        document.getElementById("cookieBanner").style.display = "none";
+        var expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 365);
+        document.cookie =
+          "cookieConsent=accepted; expires=" +
+          expirationDate.toUTCString() +
+          "; path=/";
+      }
+      function declineCookies() {
+        document.getElementById("cookieBanner").style.display = "none";
+        var expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 365);
+        document.cookie =
+          "cookieConsent=declined; expires=" +
+          expirationDate.toUTCString() +
+          "; path=/";
+      }
+      if (document.cookie.indexOf("cookieConsent=accepted") !== -1) {
+        document.getElementById("cookieBanner").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
