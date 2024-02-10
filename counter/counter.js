@@ -4,6 +4,14 @@ const path = require('path');
 const { Level } = require('level');
 const fs = require('fs');
 
+var http = require('http');
+var https = require('https');
+
+var privateKey  = fs.readFileSync('/usr/local/hestia/ssl/certificate.key;', 'utf8');
+var certificate = fs.readFileSync('/usr/local/hestia/ssl/certificate.crt;', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
+
 const app = express();
 const PORT = 3000;
 
@@ -84,6 +92,13 @@ app.get('/videos', function(req, res) {
 app.listen(PORT, () => {
     console.log("Listen on the port: " + PORT);
 });
+
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(8080);
+httpsServer.listen(8443);
+
 const debug = function () {
     console.log(dirlist);
     

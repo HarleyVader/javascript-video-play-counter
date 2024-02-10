@@ -1,8 +1,8 @@
 {
   "name": "video-play-counter",
-  "version": "0.0.5",
-  "description": "melkaneas video play counter",
-  "main": "app.js",
+  "version": "0.1.1",
+  "description": "melkaneas video play counter in javascript",
+  "main": "counter.js",
   "scripts": {
     "test": "echo does it run?"
   },
@@ -23,12 +23,8 @@
     "node",
     "express",
     "api",
-    "call",
-    "over",
     "nginx",
-    "apache2",
-    "behind",
-    "the",
+    "https",
     "CMS"
   ],
   "bugs": {
