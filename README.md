@@ -1,21 +1,17 @@
 # javascript-video-play-counter
 #junior Fullstacker interpretation
 
-### client>api>server>db>update>api>client>update-html
+### hestiaCP nginx nodejs express host running on custom port using native infrastructure
+#solved the issue by creating custom nodejs app using express by adding an include to the sites true nginx.conf
 
-challange is developing client server api calls using nodejs [express fs path body-pharser level https] on a VPS with nginx & apache2 handling hosting the reverse proxy & control panel infrastructure
-
-realization there is no need to use https with express as nginx handles the SSL certificate, solution could be to just add a listener to nginx for the express port
-
-
-internally nginx uses http
-### confuz
-
-custom public configuration files of my NSFW VPS i never spam i organically trap you in brandynettes web .........
-if you hecker me up please leave comments for ecucational purposes ^^
-
-unconfuz: let the control panel handle the cert folder permissions
-dont expose cert path on node app
-
-posiblity? just get nginx to listen for all node apps on the same port
-node container folder isolating the prossess?
+# build default nodeapp install.sh asigning the user express port & custom URI after the main site
+### INSTRUCTIONS
+ - git clone repo into /home/$user/web/$site/
+ - chmod -R $user:$user $nodeapp
+ - sudo ./install.sh $user $express.PORT $epress.FOLDER
+### this should show system path ip nodeapp docroot will take:
+ * $user (running the nodejs app)
+ * $express.PORT (port in your app.js)
+ * $express.FOLDER (websites home url + this is the link everything gets rendered)
+  
+### Then copy & rename 2 files into /home/$user/conf/web/$site/ named nginx.conf_$express.PORT & nginx.ssl.conf_$express.PORT respectively & replace the %placeholders% of both files with the passed arguments
