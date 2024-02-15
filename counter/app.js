@@ -4,16 +4,8 @@ const path = require('path');
 const { Level } = require('level');
 const fs = require('fs');
 
-var http = require('http');
-var https = require('https');
-
-var privateKey  = fs.readFileSync('/usr/local/hestia/ssl/certificate.key;', 'utf8');
-var certificate = fs.readFileSync('/usr/local/hestia/ssl/certificate.crt;', 'utf8');
-
-var credentials = {key: privateKey, cert: certificate};
-
 const app = express();
-const PORT = 3000;
+const PORT = 7777;
 
 //using an anonimous function will asign the constant globaly
 const excludedir = ["assets"];
@@ -22,13 +14,13 @@ const filter = (value) => {
         return false; 
     }
     //change dir to get the video dir list (change for VPS)
-    if (fs.statSync(path.resolve("../counter/views/") + '/' + value).isDirectory()) {
+    if (fs.statSync(path.resolve("./views") + '/' + value).isDirectory()) {
         return true
     }
     return false
 }
 //fs get dir list by filtering then joining & resolving the path for the fs to read the dir sync
-let dirlist = fs.readdirSync(path.resolve("../counter/views/")).filter(filter);
+let dirlist = fs.readdirSync(path.resolve("../counter/views")).filter(filter);
 // Create a database
 const db = new Level('vidViews', { valueEncoding: 'json' })
 db.open()
@@ -56,11 +48,13 @@ app.set("view engine", "ejs");
 // Middleware to parse JSON in the request body
 app.use(bodyParser.json());
 // Serve static files from the 'public' directory
-//console.log(app.use(express.static(path.join(__dirname, 'public'))));
+//console.log(app.use(express.static(path.join(__dirname, 'counter'))));
 app.use(express.static(path.join(__dirname, 'public')));
+//console.log(__dirname)
+
 app.get('/videos/sync', async (req, res) => {
     await addVidTodb();
-    console.log("Sync Complete!");
+    console.log("Sync Complete!", __dirname);
     return res.redirect('/videos/list');
 })
 app.get("/videos/list", async (req, res) => {
@@ -89,19 +83,10 @@ app.get('/videos/:videoId', async (req, res) => {
 app.get('/videos', function(req, res) {
     res.render(path.resolve('../counter/views/index.ejs'));
 });
-app.listen(PORT, () => {
-    console.log("Listen on the port: " + PORT);
-});
-
-var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
-
-httpServer.listen(8080);
-httpsServer.listen(8443);
+app.listen(PORT, '127.0.0.1')
 
 const debug = function () {
-    console.log(dirlist);
-    
+    console.log(dirlist);    
     //console.log(viewCount);
     //console.log(videoviews);
     //console.log(filter);

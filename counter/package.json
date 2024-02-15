@@ -1,34 +1,36 @@
 {
-  "name": "video-play-counter",
-  "version": "0.1.1",
-  "description": "melkaneas video play counter in javascript",
-  "main": "counter.js",
+  "name": "counter",
+  "version": "0.1.2",
+  "description": "melkanea javascript video play counter",
+  "main": "app.js",
   "scripts": {
-    "test": "echo does it run?"
-  },
-  "author": "melkanea",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "level": "^8.0.1"
+    "test": "npm run app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HarleyVader/javascript-video-play-counter.git"
   },
   "keywords": [
-    "melkanea",
-    "node",
+    "javascript",
     "express",
-    "api",
-    "nginx",
+    "body-parser",
+    "ejs",
+    "path",
+    "fs",
+    "level",
     "https",
-    "CMS"
+    "nginx"
   ],
+  "author": "melkanea",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/HarleyVader/javascript-video-play-counter/issues"
   },
-  "homepage": "https://github.com/HarleyVader/javascript-video-play-counter#readme"
+  "homepage": "https://github.com/HarleyVader/javascript-video-play-counter#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "level": "^8.0.1"
+  }
 }
